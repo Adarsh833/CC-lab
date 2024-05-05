@@ -1,0 +1,69 @@
+
+>>first setup java jdk
+java -version
+
+>>successfull installation and setup of apache hadoop
+hadoop version
+
+>> start all nodes and resource manager
+start-all.sh
+
+>> check all 
+jps
+
+>> i am not considering the path of your directories
+>> you need to decide this
+
+mkdir CloudProject
+cd CloudProject
+
+>>for giving all access R/W at any time if u r not able to accessing read write feature in any directory for any file
+chmod -R 777 .
+
+>> inside cloudProject dir
+make lib folder and add jasypt zip and etract this file there only
+make HDFSUploader.java file inside Cloud project dir
+also make any input file inside CloudProject
+
+
+now refer below commands according to your directories structure and paths.
+
+ unzip jasypt-1.9.0.jar.zip -d /home/ankushtiwari/Desktop/CloudProject/lib
+ 
+ hdfs dfs -ls /
+
+hdfs dfs -mkdir /CloudProject
+
+hdfs dfs -mkdir /CloudProject/Input
+
+hdfs dfs -ls /CloudProject
+
+javac -classpath "$(hadoop classpath):lib/jasypt-1.9.0.jar" HDFSUploader.java
+
+java -classpath "$(hadoop classpath):lib/jasypt-1.9.0.jar:." HDFSUploader
+
+>> input file is added in encrypted format to hdfs for checking run below command
+hdfs dfs -ls /CloudProject/Input
+
+
+now on another system which is connected with same LAN or network
+i am using second system as Windows 
+
+first add the your first systems ip and hostname to the file named "hosts" which is
+located at C:\Windows\System32\drivers\etc
+
+after that:>>
+open terminal
+run below commands
+
+ping "ipv4 address of your first system"
+
+if ping is successfull without any packet loss
+then move to next command
+
+ Invoke-WebRequest -Uri "http://192.168.1.12:9870/webhdfs/v1/CloudProject/Input/ankush.txt.encrypted?op=OPEN" -OutFile "C:\Users\ankus\OneDrive\Desktop\CloudProject\ankush_access_from_hdfs.txt"
+
+modify above command as per your local system and hadoop paths.
+
+
+
